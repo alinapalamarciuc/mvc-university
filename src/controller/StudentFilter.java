@@ -34,7 +34,7 @@ import model.PhoneType;
 import model.Profesor;
 import model.Student;
 import model.StudentSearchDTO;
-
+import utils.StudentRepository;
 /**
  * Servlet Filter implementation class StudentFilter
  */
@@ -191,8 +191,10 @@ public class StudentFilter implements Filter {
 
 		case DELETE: {
 			List<Integer> listId = new ArrayList<Integer>();
-			for (String s : request.getParameterValues("idStudent")) {
-				listId.add(new Integer(s));
+
+			StudentRepository studentRepository = new StudentRepository(request.getParameterValues("idStudent"));
+			for(Iterator iter = studentRepository.getIterator(); iter.hasNext();){
+				listId.add(new Integer(iter));
 			}
 			request.setAttribute("listId", listId);
 		}
